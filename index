@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miya Moon Menu Study Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .app-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: #3a4a6b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #2c3e50;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .tab-btn.active {
+            background: #3a4a6b;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .menu-category {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .category-title {
+            background: #3a4a6b;
+            color: white;
+            padding: 10px 15px;
+            font-size: 18px;
+        }
+        
+        .menu-item {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .item-price {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .item-desc {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Flashcards */
+        .flashcard {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+        
+        .flashcard-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .flashcard-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .control-btn {
+            padding: 10px 20px;
+            background: #3a4a6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .menu-item {
+                flex-direction: column;
+            }
+            
+            .item-image {
+                width: 100%;
+                height: auto;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>Miya Moon Menu Study Guide</h1>
+            <p>Learn the menu with photos</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('menu')">Full Menu</button>
+            <button class="tab-btn" onclick="openTab('flashcards')">Flashcards</button>
+        </div>
+        
+        <!-- Full Menu Tab -->
+        <div id="menu" class="tab-content active">
+            <div id="menu-container">
+                <!-- Menu items will be inserted here by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Flashcards Tab -->
+        <div id="flashcards" class="tab-content">
+            <div class="flashcard">
+                <img id="flashcard-img" class="flashcard-image" src="">
+                <div id="flashcard-text">Click Start to begin</div>
+                <div id="flashcard-details" style="display: none;"></div>
+                
+                <div class="flashcard-controls">
+                    <button class="control-btn" onclick="prevCard()">Previous</button>
+                    <button class="control-btn" onclick="startFlashcards()">Start</button>
+                    <button class="control-btn" onclick="nextCard()">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // SIMPLE INSTRUCTIONS:
+        // 1. For each menu item below, replace IMAGE_URL_HERE with your image URL
+        // 2. Update the name, price, and description as needed
+        // 3. That's it! No other changes needed.
+        // =============================================
+        
+        const menuData = {
+            "Appetizers": [
+                {
+                    name: "Sesame Chicken",
+                    price: "$16.00",
+                    image: "IMAGE_URL_HERE", // Replace with your sesame chicken image URL
+                    description: "Crispy chicken tossed in signature sesame sauce"
+                },
+                {
+                    name: "Crab Rangoon (4)",
+                    price: "$6.00",
+                    image: "IMAGE_URL_HERE", // Replace with your crab rangoon image URL
+                    description: "Creamy crab filling in crispy wonton wrappers"
+                },
+                {
+                    name: "Orange Chicken",
+                    price: "$16.00",
+                    image: "IMAGE_URL_HERE", // Replace with your orange chicken image URL
+                    description: "Crispy chicken with tangy orange sauce"
+                }
+            ],
+            "Soups": [
+                {
+                    name: "Wonton Soup",
+                    price: "$5.00",
+                    image: "IMAGE_URL_HERE", // Replace with your wonton soup image URL
+                    description: "Delicate wontons in clear broth"
+                },
+                {
+                    name: "Hot & Sour Soup",
+                    price: "$5.00",
+                    image: "IMAGE_URL_HERE", // Replace with your hot & sour soup image URL
+                    description: "Spicy and tangy soup with tofu and mushrooms"
+                }
+            ],
+            "Main Dishes": [
+                {
+                    name: "Beef with Broccoli",
+                    price: "$18.00",
+                    image: "IMAGE_URL_HERE", // Replace with your beef broccoli image URL
+                    description: "Tender beef and fresh broccoli in garlic sauce"
+                },
+                {
+                    name: "Mongolian Beef",
+                    price: "$18.00",
+                    image: "IMAGE_URL_HERE", // Replace with your mongolian beef image URL
+                    description: "Sliced beef with scallions in savory sauce"
+                }
+            ]
+            // Add more categories if needed
+        };
+
+        // =============================================
+        // NO NEED TO EDIT BELOW THIS LINE
+        // =============================================
+        
+        // App functionality
+        let currentCardIndex = 0;
+        let flashcardsActive = false;
+        const allMenuItems = [];
+        
+        function openTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show the selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activate the clicked button
+            event.currentTarget.classList.add('active');
+        }
+        
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            let html = '';
+            
+            for (const [category, items] of Object.entries(menuData)) {
+                html += `
+                    <div class="menu-category">
+                        <div class="category-title">${category}</div>
+                `;
+                
+                for (const item of items) {
+                    html += `
+                        <div class="menu-item">
+                            <img src="${item.image}" class="item-image" alt="${item.name}">
+                            <div class="item-info">
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-price">${item.price}</div>
+                                <div class="item-desc">${item.description}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add to all menu items for flashcards
+                    allMenuItems.push(item);
+                }
+                
+                html += `</div>`;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        function startFlashcards() {
+            flashcardsActive = true;
+            currentCardIndex = 0;
+            showCurrentCard();
+            document.querySelector('#flashcards .control-btn:nth-child(2)').textContent = 'Restart';
+        }
+        
+        function showCurrentCard() {
+            if (!flashcardsActive || allMenuItems.length === 0) return;
+            
+            const item = allMenuItems[currentCardIndex];
+            document.getElementById('flashcard-img').src = item.image;
+            document.getElementById('flashcard-text').textContent = item.name;
+            
+            const details = `
+                <p><strong>Price:</strong> ${item.price}</p>
+                <p><strong>Description:</strong> ${item.description}</p>
+            `;
+            document.getElementById('flashcard-details').innerHTML = details;
+            document.getElementById('flashcard-details').style.display = 'none';
+        }
+        
+        function nextCard() {
+            if (!flashcardsActive) return;
+            
+            if (currentCardIndex < allMenuItems.length - 1) {
+                currentCardIndex++;
+                showCurrentCard();
+            }
+        }
+        
+        function prevCard() {
+            if (!flashcardsActive) return;
+            
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                showCurrentCard();
+            }
+        }
+        
+        // Toggle flashcard details when image is clicked
+        document.getElementById('flashcard-img').addEventListener('click', function() {
+            if (flashcardsActive) {
+                const details = document.getElementById('flashcard-details');
+                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+        
+        // Initialize the app
+        window.onload = function() {
+            renderMenu();
+        };
+    </script>
+</body>
+</html>
